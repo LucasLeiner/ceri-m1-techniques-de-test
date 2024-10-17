@@ -49,7 +49,6 @@ orbs:
 workflows:
   upload-to-codecov:
     jobs:
-      - checkout
       - codecov/upload:
           requires:
             - build-and-test
