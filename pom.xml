@@ -70,6 +70,16 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>target</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
 
             <!-- Maven Compiler Plugin -->
@@ -78,6 +88,12 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
+                    <source>11</source> <!-- Version de Java source -->
+                    <target>11</target> <!-- Version de Java cible -->
+                </configuration>
+            </plugin>
+
+            <!-- JaCoCo Plugin for Code Coverage -->
                     <source>11</source> <!-- Java 11 -->
                     <target>11</target> <!-- Java 11 -->
                 </configuration>
