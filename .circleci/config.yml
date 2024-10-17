@@ -45,3 +45,9 @@ workflows:
 
 env:
   CODECOV_TOKEN: d6203c06-61e3-492c-9b36-fab5437c3a01
+
+
+  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
+    jobs:
+      - build-and-test
