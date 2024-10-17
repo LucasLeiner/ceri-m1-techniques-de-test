@@ -46,6 +46,5 @@ workflows:
             branches:
               only:
                 - master
-
 env:
   CODECOV_TOKEN: d6203c06-61e3-492c-9b36-fab5437c3a01
