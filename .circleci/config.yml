@@ -39,10 +39,6 @@ workflows:
   build-and-test-and-upload:
     jobs:
       - build-and-test:
-          filters:
-            branches:
-              only:
-                - master
       - codecov-upload:
           requires:
             - build-and-test
