@@ -50,7 +50,13 @@ workflows:
   upload-to-codecov:
     jobs:
       - checkout
-      - codecov/upload
+      - codecov/upload:
+          requires:
+            - build-and-test
+          workspace:
+            at: .
+          with:
+            token: CODECOV_TOKEN
     env:
     CODECOV_TOKEN: d6203c06-61e3-492c-9b36-fab5437c3a01
     
