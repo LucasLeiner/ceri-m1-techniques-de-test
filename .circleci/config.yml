@@ -38,8 +38,8 @@ workflows:
   version: 2
   build-and-test-and-upload:
     jobs:
-      - build-and-test:
-      - codecov-upload:
+      - build-and-test  # No additional configuration, just use the job name as a string
+      - codecov-upload:  # Requires additional configuration, use it as a mapping
           requires:
             - build-and-test
 
