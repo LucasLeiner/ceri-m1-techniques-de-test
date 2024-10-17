@@ -31,6 +31,16 @@ jobs:
           name: Test
           command: mvn test
 
+            # Define a job to upload coverage data to Codecov
+  codecov-upload:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - run:
+          name: Upload to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
+
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
 orbs:
