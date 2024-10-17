@@ -47,24 +47,20 @@ orbs:
   codecov: codecov/codecov@4.0.1
   
 workflows:
-  build-and-test-and-upload:
+  upload-to-codecov:
+    jobs:
+      - checkout
+      - codecov/upload
+    env:
+    CODECOV_TOKEN: d6203c06-61e3-492c-9b36-fab5437c3a01
+    
+  build-and-test-workflow:
     jobs:
       - build-and-test:
           filters:
             branches:
               only:
                 - master
-      - codecov/upload:
-          requires:
-            - build-and-test
-          workspace:
-            at: .
-          with:
-            token: CODECOV_TOKEN
-
-env:
-  CODECOV_TOKEN: d6203c06-61e3-492c-9b36-fab5437c3a01
-  
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
