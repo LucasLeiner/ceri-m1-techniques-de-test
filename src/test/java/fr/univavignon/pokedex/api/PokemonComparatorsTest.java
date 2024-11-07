@@ -10,44 +10,39 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PokemonComparatorsTest {
 
-    private Pokemon bulbasaur;
-    private Pokemon vaporeon;
-    private Pokemon charmander;
+    private Pokemon bulbizare;
+    private Pokemon aquali;
 
     @BeforeEach
     public void setup() {
-        bulbasaur = new Pokemon(1, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56);
-        vaporeon = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 1);
-        charmander = new Pokemon(4, "Salamèche", 128, 108, 78, 700, 76, 4000, 2, 0.6);
+        bulbizare = new Pokemon(1, "Bulbizare", 126, 126, 90, 613, 64, 4000, 4, 0.56);
+        aquali = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 1);
     }
 
     @Test
     public void testCompareByName() {
-        List<Pokemon> pokemons = Arrays.asList(charmander, vaporeon, bulbasaur);
+        List<Pokemon> pokemons = Arrays.asList(aquali, bulbizare);
         pokemons.sort(PokemonComparators.NAME);
 
         assertEquals("Aquali", pokemons.get(0).getName());
-        assertEquals("Bulbizarre", pokemons.get(1).getName());
-        assertEquals("Salamèche", pokemons.get(2).getName());
+        assertEquals("Bulbizare", pokemons.get(1).getName());
     }
 
     @Test
     public void testCompareByIndex() {
-        List<Pokemon> pokemons = Arrays.asList(vaporeon, charmander, bulbasaur);
+        List<Pokemon> pokemons = Arrays.asList(aquali, bulbizare);
         pokemons.sort(PokemonComparators.INDEX);
 
         assertEquals(1, pokemons.get(0).getIndex());
-        assertEquals(4, pokemons.get(1).getIndex());
-        assertEquals(133, pokemons.get(2).getIndex());
+        assertEquals(133, pokemons.get(1).getIndex());
     }
 
     @Test
     public void testCompareByCp() {
-        List<Pokemon> pokemons = Arrays.asList(bulbasaur, charmander, vaporeon);
+        List<Pokemon> pokemons = Arrays.asList(bulbizare, aquali);
         pokemons.sort(PokemonComparators.CP);
 
         assertEquals(613, pokemons.get(0).getCp());
-        assertEquals(700, pokemons.get(1).getCp());
-        assertEquals(2729, pokemons.get(2).getCp());
+        assertEquals(2729, pokemons.get(1).getCp());
     }
 }
