@@ -90,9 +90,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <version>0.8.8</version>
                 <executions>
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <phase>initialize</phase>
                     </execution>
                     <execution>
                         <id>report</id>
@@ -113,6 +115,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
+                    <argLine>@{argLine} -Xmx1024m -XX:MaxPermSize=256m</argLine>
                 </configuration>
             </plugin>
         </plugins>

@@ -18,9 +18,7 @@ jobs:
       - run:
           name: List target directory
           command: ls -R target
-      - codecov/upload:
-          file: target/site/jacoco/jacoco.xml
-          token: CODECOV_TOKEN
+      - codecov/upload
       - persist_to_workspace:
           root: .
           paths:
