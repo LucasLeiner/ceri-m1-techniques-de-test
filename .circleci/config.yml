@@ -13,8 +13,9 @@ jobs:
           name: Build
           command: mvn -B clean package
       - run:
-          name: Test and Generate Coverage Report
-          command: mvn test jacoco:report
+          name: Upload coverage reports to Codecov
+          command: |
+            bash <(curl -s https://codecov.io/bash)
       - run:
           name: List target directory
           command: ls -R target
