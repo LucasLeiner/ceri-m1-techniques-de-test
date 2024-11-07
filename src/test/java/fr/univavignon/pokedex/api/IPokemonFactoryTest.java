@@ -32,6 +32,7 @@ public class IPokemonFactoryTest {
         assertEquals(134, createdPokemon.getAttack());
         assertEquals(134, createdPokemon.getDefense());
         assertEquals(98, createdPokemon.getStamina());
+        assertEquals(0.56, createdPokemon.getIv());
     }
 
     @Test
@@ -50,5 +51,6 @@ public class IPokemonFactoryTest {
         assertEquals(201, createdPokemon.getAttack());
         assertEquals(201, createdPokemon.getDefense());
         assertEquals(275, createdPokemon.getStamina());
+        assertEquals(1, createdPokemon.getIv());
     }
 }
