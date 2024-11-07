@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@4.0.1
+
 jobs:
   build-and-test:
     docker:
@@ -28,9 +31,6 @@ jobs:
           name: Upload to Codecov
           command: bash <(curl -s https://codecov.io/bash)
 
-orbs:
-  codecov: codecov/codecov@4.0.1
-
 workflows:
   version: 2
   build-and-test-and-upload:
@@ -40,15 +40,5 @@ workflows:
           requires:
             - build-and-test
 
-  upload-to-codecov :
-    jobs :
-      - checkout
-      - codecov/upload
-
 env:
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-
-  sample:
-    jobs:
-      - build-and-test
