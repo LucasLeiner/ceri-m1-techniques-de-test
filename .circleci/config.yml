@@ -15,18 +15,13 @@ jobs:
       - run:
           name: Test
           command: mvn test
-      - persist_to_workspace:
-          root: .
-          paths:
-            - target
+      - codecov/upload
 
   codecov-upload:
     docker:
       - image: cimg/openjdk:11.0
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - run:
           name: Upload to Codecov
           command: bash <(curl -s https://codecov.io/bash)
