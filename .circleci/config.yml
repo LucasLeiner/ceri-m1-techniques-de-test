@@ -15,6 +15,9 @@ jobs:
       - run:
           name: Test and Generate Coverage Report
           command: mvn test jacoco:report
+      - run:
+          name: List target directory
+          command: ls -R target
       - codecov/upload:
           file: target/site/jacoco/jacoco.xml
           token: CODECOV_TOKEN
