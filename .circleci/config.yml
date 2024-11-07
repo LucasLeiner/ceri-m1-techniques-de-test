@@ -4,28 +4,38 @@ orbs:
   codecov: codecov/codecov@4.0.1
 
 jobs:
-  build-and-test:
+  build:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: cimg/openjdk:23.0
     steps:
       - checkout
       - run:
-          name: Build
-          command: mvn -B clean package
+          name: Setup Maven
+          command: mvn -version
       - run:
-          name: Upload coverage reports to Codecov
-          command: |
-            bash <(curl -s https://codecov.io/bash)
+          name: Build With Maven
+          command: mvn clean package -DskipTests
+
+  test:
+    docker:
+      - image: cimg/openjdk:23.0
+    steps:
+      - checkout
       - run:
-          name: List target directory
-          command: ls -R target
-      - persist_to_workspace:
-          root: .
-          paths:
-            - target
+          name: Test With Maven
+          command: mvn test jacoco:report
+      - run:
+          name: Generate JaCoCo Coverage Report
+          command: mvn jacoco:report
+      - codecov/upload
 
 workflows:
-  version: 2
-  build-and-test-and-upload:
+  build_and_test_and_deploy:
     jobs:
-      - build-and-test
+      - build:
+        filters:
+          branches:
+            only: master
+      - test:
+          requires:
+            - build
