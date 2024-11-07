@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@4.0.1
 
-# Define jobs
 jobs:
   build-and-test:
     docker:
@@ -16,7 +15,6 @@ jobs:
       - run:
           name: Test
           command: mvn test
-      # Save the workspace (e.g., test results or reports) for the next job (like code coverage upload)
       - persist_to_workspace:
           root: .
           paths:
@@ -27,14 +25,12 @@ jobs:
       - image: cimg/openjdk:11.0
     steps:
       - checkout
-      # Restore workspace data
       - attach_workspace:
           at: .
       - run:
           name: Upload to Codecov
           command: bash <(curl -s https://codecov.io/bash)
 
-# Define workflows
 workflows:
   version: 2
   build-and-test-and-upload:
@@ -43,3 +39,6 @@ workflows:
       - codecov-upload:
           requires:
             - build-and-test
+
+env:
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
