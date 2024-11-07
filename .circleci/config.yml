@@ -11,10 +11,10 @@ jobs:
       - checkout
       - run:
           name: Build
-          command: mvn -B -DskipTests clean package
+          command: mvn -B clean package
       - run:
-          name: Test
-          command: mvn test
+          name: Test and Generate Coverage Report
+          command: mvn test jacoco:report
       - persist_to_workspace:
           root: .
           paths:
@@ -29,7 +29,7 @@ jobs:
           at: .
       - run:
           name: Upload to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
+          command: bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml
 
 workflows:
   version: 2
