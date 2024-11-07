@@ -1,5 +1,14 @@
 # UCE Génie Logiciel Avancé : Techniques de tests
 
+## Status
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/LucasLeiner/ceri-m1-techniques-de-test/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/LucasLeiner/ceri-m1-techniques-de-test/tree/master)
+[![codecov](https://codecov.io/gh/LucasLeiner/ceri-m1-techniques-de-test/graph/badge.svg?token=CWFH6J87EK)](https://codecov.io/gh/LucasLeiner/ceri-m1-techniques-de-test)
+
+**Leiner** Lucas 
+
+**ILSEN** Alt
+
 ## Introduction
 
 Vous allez à travers ces projet mettre en application une partie des aspects évoqués en cours vis à vis des techniques de tests.  
