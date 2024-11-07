@@ -17,7 +17,7 @@ jobs:
           command: mvn test jacoco:report
       - codecov/upload:
           file: target/site/jacoco/jacoco.xml
-          token: $CODECOV_TOKEN
+          token: CODECOV_TOKEN
       - persist_to_workspace:
           root: .
           paths:
@@ -28,6 +28,3 @@ workflows:
   build-and-test-and-upload:
     jobs:
       - build-and-test
-
-env:
-  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
