@@ -3,3 +3,4 @@
 /home/lucas/Bureau/TechniquesDeTest/ceri-m1-techniques-de-test/src/test/java/fr/univavignon/pokedex/api/IPokemonFactoryTest.java
 /home/lucas/Bureau/TechniquesDeTest/ceri-m1-techniques-de-test/src/test/java/fr/univavignon/pokedex/api/IPokemonMetadataProviderTest.java
 /home/lucas/Bureau/TechniquesDeTest/ceri-m1-techniques-de-test/src/test/java/fr/univavignon/pokedex/api/IPokemonTrainerFactoryTest.java
+/home/lucas/Bureau/TechniquesDeTest/ceri-m1-techniques-de-test/src/test/java/fr/univavignon/pokedex/api/PokemonComparatorsTest.java

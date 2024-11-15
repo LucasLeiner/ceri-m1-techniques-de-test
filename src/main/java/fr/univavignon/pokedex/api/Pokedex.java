@@ -11,6 +11,12 @@ public class Pokedex implements IPokedex {
     private final IPokemonMetadataProvider metadataProvider;
     private final IPokemonFactory pokemonFactory;
 
+    /**
+     * Constructor for Pokedex.
+     *
+     * @param metadataProvider The provider for Pokemon metadata.
+     * @param pokemonFactory The factory responsible for creating Pokemon instances.
+     */
     public Pokedex(IPokemonMetadataProvider metadataProvider, IPokemonFactory pokemonFactory) {
         this.metadataProvider = metadataProvider;
         this.pokemonFactory = pokemonFactory;

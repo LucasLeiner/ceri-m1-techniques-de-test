@@ -7,6 +7,11 @@ public class PokemonFactory implements IPokemonFactory {
     private final IPokemonMetadataProvider metadataProvider;
     private final Random random;
 
+    /**
+     * Constructor for PokemonFactory.
+     *
+     * @param metadataProvider The provider for Pokemon metadata.
+     */
     public PokemonFactory(IPokemonMetadataProvider metadataProvider) {
         this.metadataProvider = metadataProvider;
         this.random = new Random();
