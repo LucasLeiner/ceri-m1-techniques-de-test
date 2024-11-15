@@ -13,10 +13,8 @@ public class PokemonMetadataProvider implements IPokemonMetadataProvider {
     }
 
     private void initializeMetadata() {
-        // Ajout des métadonnées pour quelques Pokémon pour les tests
         metadataMap.put(0, new PokemonMetadata(0, "Bulbizarre", 126, 126, 90));
         metadataMap.put(133, new PokemonMetadata(133, "Aquali", 186, 168, 260));
-        // Ajoutez ici d'autres Pokémon si nécessaire
     }
 
     @Override

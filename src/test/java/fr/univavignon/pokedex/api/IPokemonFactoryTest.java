@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class IPokemonFactoryTest {
 
@@ -14,14 +12,13 @@ public class IPokemonFactoryTest {
 
     @BeforeEach
     public void setup() {
-        metadataProvider = mock(IPokemonMetadataProvider.class);
+        metadataProvider = new PokemonMetadataProvider();
         pokemonFactory = new PokemonFactory(metadataProvider);
     }
 
     @Test
     public void testCreatePokemonBulbizarre() throws PokedexException {
         PokemonMetadata bulbizarreMetadata = new PokemonMetadata(0, "Bulbizarre", 126, 126, 90);
-        when(metadataProvider.getPokemonMetadata(0)).thenReturn(bulbizarreMetadata);
 
         Pokemon pokemon = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
 
@@ -44,12 +41,11 @@ public class IPokemonFactoryTest {
     @Test
     public void testCreatePokemonAquali() throws PokedexException {
         PokemonMetadata aqualiMetadata = new PokemonMetadata(0, "Aquali", 186, 168, 260);
-        when(metadataProvider.getPokemonMetadata(0)).thenReturn(aqualiMetadata);
 
-        Pokemon pokemon = pokemonFactory.createPokemon(0, 2729, 202, 5000, 4);
+        Pokemon pokemon = pokemonFactory.createPokemon(133, 2729, 202, 5000, 4);
 
         assertNotNull(pokemon);
-        assertEquals(0, pokemon.getIndex());
+        assertEquals(133, pokemon.getIndex());
         assertEquals("Aquali", pokemon.getName());
         assertEquals(2729, pokemon.getCp());
         assertEquals(202, pokemon.getHp());
@@ -67,7 +63,6 @@ public class IPokemonFactoryTest {
 
     @Test
     public void testCreatePokemonInvalidMetadata() throws PokedexException {
-        when(metadataProvider.getPokemonMetadata(999)).thenThrow(new PokedexException("Invalid index"));
 
         assertThrows(RuntimeException.class, () -> pokemonFactory.createPokemon(999, 1000, 100, 1000, 1));
     }

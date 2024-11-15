@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 public class IPokedexTest {
 
@@ -16,8 +15,8 @@ public class IPokedexTest {
 
     @BeforeEach
     public void setup() {
-        IPokemonMetadataProvider metadataProvider = mock(IPokemonMetadataProvider.class);
-        IPokemonFactory pokemonFactory = mock(IPokemonFactory.class);
+        IPokemonMetadataProvider metadataProvider = new PokemonMetadataProvider();
+        IPokemonFactory pokemonFactory = new PokemonFactory(metadataProvider);
         pokedex = new Pokedex(metadataProvider, pokemonFactory);
     }
 
