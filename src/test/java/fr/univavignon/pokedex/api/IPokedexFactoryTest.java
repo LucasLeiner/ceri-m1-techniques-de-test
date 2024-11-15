@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class IPokedexFactoryTest {
 
@@ -15,18 +13,16 @@ public class IPokedexFactoryTest {
 
     @BeforeEach
     public void setUp() {
-        pokedexFactory = mock(IPokedexFactory.class);
-        metadataProvider = mock(IPokemonMetadataProvider.class);
-        pokemonFactory = mock(IPokemonFactory.class);
+        pokedexFactory = new PokedexFactory();
+        metadataProvider = new PokemonMetadataProvider();
+        pokemonFactory = new PokemonFactory(metadataProvider);
     }
 
     @Test
     public void testCreatePokedex() {
-        IPokedex expectedPokedex = mock(IPokedex.class);
-        when(pokedexFactory.createPokedex(metadataProvider, pokemonFactory)).thenReturn(expectedPokedex);
-        IPokedex createdPokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
+        IPokedex pokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
 
-        assertNotNull(createdPokedex);
-        assertEquals(expectedPokedex, createdPokedex);
+        assertNotNull(pokedex);
+        assertInstanceOf(Pokedex.class, pokedex);
     }
 }

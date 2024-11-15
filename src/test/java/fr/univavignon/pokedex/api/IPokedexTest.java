@@ -8,8 +8,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class IPokedexTest {
 
@@ -17,30 +15,34 @@ public class IPokedexTest {
 
     @BeforeEach
     public void setup() {
-        pokedex = mock(IPokedex.class);
-    }
-
-    @Test
-    public void testSize() {
-        when(pokedex.size()).thenReturn(3);
-        int size = pokedex.size();
-
-        assertEquals(3, size);
+        IPokemonMetadataProvider metadataProvider = new PokemonMetadataProvider();
+        IPokemonFactory pokemonFactory = new PokemonFactory(metadataProvider);
+        pokedex = new Pokedex(metadataProvider, pokemonFactory);
     }
 
     @Test
     public void testAddPokemon() {
         Pokemon pokemon = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56);
-        when(pokedex.addPokemon(pokemon)).thenReturn(0);
         int index = pokedex.addPokemon(pokemon);
 
         assertEquals(0, index);
     }
 
     @Test
+    public void testSize() {
+        Pokemon pokemon1 = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56);
+        Pokemon pokemon2 = new Pokemon(133, "Aquali", 186, 168, 260, 2729  , 202, 5000, 4, 1);
+        pokedex.addPokemon(pokemon1);
+        pokedex.addPokemon(pokemon2);
+        int size = pokedex.size();
+
+        assertEquals(2, size);
+    }
+
+    @Test
     public void testGetPokemonValidId() throws PokedexException {
         Pokemon pokemon = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56);
-        when(pokedex.getPokemon(0)).thenReturn(pokemon);
+        pokedex.addPokemon(pokemon);
         Pokemon result = pokedex.getPokemon(0);
 
         assertNotNull(result);
@@ -48,36 +50,42 @@ public class IPokedexTest {
     }
 
     @Test
-    public void testGetPokemonInvalidId() throws PokedexException {
-        PokedexException pokException = new PokedexException("ID invalide");
-        when(pokedex.getPokemon(200)).thenThrow(pokException);
-
-        assertThrows(PokedexException.class, () -> pokedex.getPokemon(200));
+    public void testGetPokemonInvalidId() {
+        assertThrows(PokedexException.class, () -> pokedex.getPokemon(200), "Expected PokedexException for invalid ID");
     }
+
 
     @Test
     public void testGetPokemons() {
+        Pokemon pokemon1 = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56);
+        Pokemon pokemon2 = new Pokemon(133, "Aquali", 186, 168, 260, 2729  , 202, 5000, 4, 1);
+
         List<Pokemon> pokemons = Arrays.asList(
-                new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56),
-                new Pokemon(133, "Aquali", 186, 168, 260, 2729  , 202, 5000, 4, 1)
+                pokemon1,
+                pokemon2
         );
-        when(pokedex.getPokemons()).thenReturn(pokemons);
+        pokedex.addPokemon(pokemon1);
+        pokedex.addPokemon(pokemon2);
+
         List<Pokemon> result = pokedex.getPokemons();
 
         assertNotNull(result);
         assertEquals(2, result.size());
+        assertEquals(pokemons, result);
     }
 
     @Test
     public void testGetPokemonsSorted() {
-        List<Pokemon> pokemons = Arrays.asList(
-                new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56),
-                new Pokemon(133, "Aquali", 186, 168, 260, 2729  , 202, 5000, 4, 1)
-        );
-        Comparator<Pokemon> comparator = Comparator.comparing(Pokemon::getName);
-        when(pokedex.getPokemons(comparator)).thenReturn(pokemons);
+        Pokemon pokemon1 = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 0.56);
+        Pokemon pokemon2 = new Pokemon(133, "Aquali", 186, 168, 260, 2729  , 202, 5000, 4, 1);
+
+        pokedex.addPokemon(pokemon1);
+        pokedex.addPokemon(pokemon2);
+
+        Comparator<Pokemon> comparator = PokemonComparators.NAME;
         List<Pokemon> result = pokedex.getPokemons(comparator);
 
-        assertEquals("Bulbizarre", result.get(0).getName());
+        assertEquals("Aquali", result.get(0).getName());
+        assertEquals("Bulbizarre", result.get(1).getName());
     }
 }

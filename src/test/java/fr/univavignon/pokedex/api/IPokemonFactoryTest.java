@@ -4,53 +4,66 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class IPokemonFactoryTest {
 
-    private IPokemonFactory pokemonFactory;
+    private PokemonFactory pokemonFactory;
+    private IPokemonMetadataProvider metadataProvider;
 
     @BeforeEach
     public void setup() {
-        pokemonFactory = mock(IPokemonFactory.class);
+        metadataProvider = new PokemonMetadataProvider();
+        pokemonFactory = new PokemonFactory(metadataProvider);
     }
 
     @Test
-    public void testCreatePokemonBulbizarre() {
-        Pokemon expectedPokemon = new Pokemon(0, "Bulbizarre", 134, 134, 98, 613, 64, 4000, 4, 0.56);
-        when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4)).thenReturn(expectedPokemon);
-        Pokemon createdPokemon = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
+    public void testCreatePokemonBulbizarre() throws PokedexException {
+        PokemonMetadata bulbizarreMetadata = new PokemonMetadata(0, "Bulbizarre", 126, 126, 90);
 
-        assertNotNull(createdPokemon);
-        assertEquals(0, createdPokemon.getIndex());
-        assertEquals("Bulbizarre", createdPokemon.getName());
-        assertEquals(613, createdPokemon.getCp());
-        assertEquals(64, createdPokemon.getHp());
-        assertEquals(4000, createdPokemon.getDust());
-        assertEquals(4, createdPokemon.getCandy());
-        assertEquals(134, createdPokemon.getAttack());
-        assertEquals(134, createdPokemon.getDefense());
-        assertEquals(98, createdPokemon.getStamina());
-        assertEquals(0.56, createdPokemon.getIv());
+        Pokemon pokemon = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
+
+        assertNotNull(pokemon);
+        assertEquals(0, pokemon.getIndex());
+        assertEquals("Bulbizarre", pokemon.getName());
+        assertEquals(613, pokemon.getCp());
+        assertEquals(64, pokemon.getHp());
+        assertEquals(4000, pokemon.getDust());
+        assertEquals(4, pokemon.getCandy());
+
+        assertNotNull(pokemon.getIv());
+        assertTrue(pokemon.getIv() >= 0 && pokemon.getIv() <= 1);
+
+        assertEquals(pokemon.getAttack(), bulbizarreMetadata.getAttack() + (int) Math.round(pokemon.getIv() * 15));
+        assertEquals(pokemon.getAttack(), bulbizarreMetadata.getAttack() + (int) Math.round(pokemon.getIv() * 15));
+        assertEquals(pokemon.getAttack(), bulbizarreMetadata.getAttack() + (int) Math.round(pokemon.getIv() * 15));
     }
 
     @Test
-    public void testCreatePokemonAquali() {
-        Pokemon expectedPokemon = new Pokemon(0, "Aquali", 201, 201, 275, 2729, 202, 5000, 4, 1);
-        when(pokemonFactory.createPokemon(0, 2729, 202, 5000, 4)).thenReturn(expectedPokemon);
-        Pokemon createdPokemon = pokemonFactory.createPokemon(0, 2729, 202, 5000, 4);
+    public void testCreatePokemonAquali() throws PokedexException {
+        PokemonMetadata aqualiMetadata = new PokemonMetadata(0, "Aquali", 186, 168, 260);
 
-        assertNotNull(createdPokemon);
-        assertEquals(0, createdPokemon.getIndex());
-        assertEquals("Aquali", createdPokemon.getName());
-        assertEquals(2729, createdPokemon.getCp());
-        assertEquals(202, createdPokemon.getHp());
-        assertEquals(5000, createdPokemon.getDust());
-        assertEquals(4, createdPokemon.getCandy());
-        assertEquals(201, createdPokemon.getAttack());
-        assertEquals(201, createdPokemon.getDefense());
-        assertEquals(275, createdPokemon.getStamina());
-        assertEquals(1, createdPokemon.getIv());
+        Pokemon pokemon = pokemonFactory.createPokemon(133, 2729, 202, 5000, 4);
+
+        assertNotNull(pokemon);
+        assertEquals(133, pokemon.getIndex());
+        assertEquals("Aquali", pokemon.getName());
+        assertEquals(2729, pokemon.getCp());
+        assertEquals(202, pokemon.getHp());
+        assertEquals(5000, pokemon.getDust());
+        assertEquals(4, pokemon.getCandy());
+
+        assertNotNull(pokemon.getIv());
+        assertTrue(pokemon.getIv() >= 0 && pokemon.getIv() <= 1);
+
+        assertEquals(pokemon.getAttack(), aqualiMetadata.getAttack() + (int) Math.round(pokemon.getIv() * 15));
+        assertEquals(pokemon.getDefense(), aqualiMetadata.getDefense() + (int) Math.round(pokemon.getIv() * 15));
+        assertEquals(pokemon.getStamina(), aqualiMetadata.getStamina() + (int) Math.round(pokemon.getIv() * 15));
+    }
+
+
+    @Test
+    public void testCreatePokemonInvalidMetadata() throws PokedexException {
+
+        assertThrows(RuntimeException.class, () -> pokemonFactory.createPokemon(999, 1000, 100, 1000, 1));
     }
 }
