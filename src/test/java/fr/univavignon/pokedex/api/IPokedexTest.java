@@ -52,6 +52,7 @@ public class IPokedexTest {
     @Test
     public void testGetPokemonInvalidId() {
         assertThrows(PokedexException.class, () -> pokedex.getPokemon(200), "Expected PokedexException for invalid ID");
+        assertThrows(PokedexException.class, () -> pokedex.getPokemon(-1), "Expected PokedexException for invalid ID");
     }
 
 
@@ -87,5 +88,29 @@ public class IPokedexTest {
 
         assertEquals("Aquali", result.get(0).getName());
         assertEquals("Bulbizarre", result.get(1).getName());
+    }
+
+    @Test
+    public void testGetPokemonMetadataValidIndex() throws PokedexException {
+        PokemonMetadata metadata = pokedex.getPokemonMetadata(0);
+        assertNotNull(metadata);
+        assertEquals(0, metadata.getIndex());
+        assertEquals("Bulbizarre", metadata.getName());
+        assertEquals(126, metadata.getAttack());
+        assertEquals(126, metadata.getDefense());
+        assertEquals(90, metadata.getStamina());
+    }
+
+    @Test
+    public void testCreatePokemon() throws PokedexException {
+        Pokemon pokemon = pokedex.createPokemon(0, 613, 64, 4000, 4);
+        assertNotNull(pokemon);
+        assertEquals(0, pokemon.getIndex());
+        assertEquals("Bulbizarre", pokemon.getName());
+        assertEquals(613, pokemon.getCp());
+        assertEquals(64, pokemon.getHp());
+        assertEquals(4000, pokemon.getDust());
+        assertEquals(4, pokemon.getCandy());
+        assertTrue(pokemon.getIv() >= 0 && pokemon.getIv() <= 1);
     }
 }
