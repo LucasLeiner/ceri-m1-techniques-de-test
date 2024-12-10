@@ -6,7 +6,6 @@
 ![CheckStyle Badge](https://img.shields.io/badge/CheckStyle-96-green)
 [![codecov](https://codecov.io/gh/LucasLeiner/ceri-m1-techniques-de-test/graph/badge.svg?token=CWFH6J87EK)](https://codecov.io/gh/LucasLeiner/ceri-m1-techniques-de-test)
 
-
 **Leiner** Lucas 
 
 **ILSEN** Alt
