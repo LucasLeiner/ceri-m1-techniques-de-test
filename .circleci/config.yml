@@ -46,8 +46,8 @@ jobs:
           command: |
             # Mise à jour du badge CheckStyle dans le README
             echo "![CheckStyle Badge](https://img.shields.io/badge/CheckStyle-$checkstyle-errors-green)" > README.md
-            git config user.name "circleci-bot"
-            git config user.email "circleci-bot@example.com"
+            git config user.name "LucasLeiner"
+            git config user.email "lucasleiner05@gmail.com"
             git add README.md
             git commit -m "Update Checkstyle Badge"
             git push origin master
@@ -60,14 +60,9 @@ workflows:
           filters:
             branches:
               only: master
-            ignore:
-              - /Update Checkstyle Badge/
       - test:
           requires:
             - build
           filters:
             branches:
               only: master
-            ignore:
-              - /Update Checkstyle Badge/
-
