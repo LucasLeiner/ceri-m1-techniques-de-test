@@ -27,15 +27,42 @@ jobs:
       - run:
           name: Generate JaCoCo Coverage Report
           command: mvn jacoco:report
+      - run:
+          name: Run Checkstyle Analysis
+          command: mvn checkstyle:checkstyle
+      - run:
+          name: Configure Git for Your Account
+          command: |
+            git config --global user.name "LucasLeiner"
+            git config --global user.email "lucasleiner05@gmail.com"
+            git remote set-url origin https://<LucasLeiner>:${GH_TOKEN}@github.com/<LucasLeiner>/<ceri-m1-techniques-de-test>.git
+      - run:
+          name: Count Checkstyle Errors
+          command: |
+            errors=$(xmllint --xpath "count(//error)" target/checkstyle-result.xml)
+            echo "checkstyle-errors=$errors" >> $BASH_ENV
+      - run:
+          name: Update README.md with Badge
+          command: |
+            # Mise à jour du badge CheckStyle dans le README
+            echo "![CheckStyle Badge](https://img.shields.io/badge/CheckStyle-$checkstyle-errors-green)" > README.md
+            git config user.name "LucasLeiner"
+            git config user.email "lucasleiner05@gmail.com"
+            git add README.md
+            git commit -m "Update Checkstyle Badge"
+            git push origin master
       - codecov/upload
 
 workflows:
   build_and_test_and_deploy:
     jobs:
       - build:
-        filters:
-          branches:
-            only: master
+          filters:
+            branches:
+              only: master
       - test:
           requires:
             - build
+          filters:
+            branches:
+              only: master
