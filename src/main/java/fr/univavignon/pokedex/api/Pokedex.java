@@ -15,9 +15,11 @@ public class Pokedex implements IPokedex {
      * Constructor for Pokedex.
      *
      * @param metadataProvider The provider for Pokemon metadata.
-     * @param pokemonFactory The factory responsible for creating Pokemon instances.
+     * @param pokemonFactory The factory responsible for
+     *                       creating Pokemon instances.
      */
-    public Pokedex(IPokemonMetadataProvider metadataProvider, IPokemonFactory pokemonFactory) {
+    public Pokedex(final IPokemonMetadataProvider metadataProvider,
+                   final IPokemonFactory pokemonFactory) {
         this.metadataProvider = metadataProvider;
         this.pokemonFactory = pokemonFactory;
         this.pokemons = new ArrayList<>();
@@ -29,13 +31,13 @@ public class Pokedex implements IPokedex {
     }
 
     @Override
-    public int addPokemon(Pokemon pokemon) {
+    public int addPokemon(final Pokemon pokemon) {
         pokemons.add(pokemon);
         return pokemons.indexOf(pokemon);
     }
 
     @Override
-    public Pokemon getPokemon(int id) throws PokedexException {
+    public Pokemon getPokemon(final int id) throws PokedexException {
         if (id < 0 || id >= pokemons.size()) {
             throw new PokedexException("ID invalide");
         }
@@ -48,20 +50,19 @@ public class Pokedex implements IPokedex {
     }
 
     @Override
-    public List<Pokemon> getPokemons(Comparator<Pokemon> order) {
+    public List<Pokemon> getPokemons(final Comparator<Pokemon> order) {
         List<Pokemon> sortedList = new ArrayList<>(pokemons);
         sortedList.sort(order);
         return Collections.unmodifiableList(sortedList);
     }
 
-    // Additional methods from IPokemonMetadataProvider and IPokemonFactory
     @Override
-    public PokemonMetadata getPokemonMetadata(int index) throws PokedexException {
+    public PokemonMetadata getPokemonMetadata(final int index) throws PokedexException {
         return metadataProvider.getPokemonMetadata(index);
     }
 
     @Override
-    public Pokemon createPokemon(int index, int cp, int hp, int dust, int candy) {
+    public Pokemon createPokemon(final int index, final int cp, final int hp, final int dust, final int candy) {
         return pokemonFactory.createPokemon(index, cp, hp, dust, candy);
     }
 }
