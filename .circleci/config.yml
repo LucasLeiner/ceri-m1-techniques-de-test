@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@4.0.1
 
-
 jobs:
   test:
     docker:
@@ -46,9 +45,13 @@ workflows:
           filters:
             branches:
               only: master
+            ignore:
+              - /Update Checkstyle Badge/
       - test:
           requires:
             - build
           filters:
             branches:
               only: master
+            ignore:
+              - /Update Checkstyle Badge/
