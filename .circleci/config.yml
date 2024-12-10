@@ -56,6 +56,7 @@ jobs:
             git push https://LucasLeiner:${GH_TOKEN}@github.com/LucasLeiner/ceri-m1-techniques-de-test.git master
       - codecov/upload
 
+
 workflows:
   build_and_test_and_deploy:
     jobs:
