@@ -36,8 +36,13 @@ jobs:
       - run:
           name: Count Checkstyle Errors
           command: |
-            errors=$(xmllint --xpath "count(//error)" target/checkstyle-result.xml)
-            echo "export checkstyle_errors=$errors" >> $BASH_ENV
+            if [ -s target/checkstyle-result.xml ]; then
+              errors=$(xmllint --xpath "count(//error)" target/checkstyle-result.xml)
+              echo "export checkstyle_errors=$errors" >> $BASH_ENV
+            else
+              echo "export checkstyle_errors=0" >> $BASH_ENV
+            fi
+
       - run:
           name: Update README.md with Badge
           command: |
