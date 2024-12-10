@@ -37,16 +37,16 @@ jobs:
           name: Count Checkstyle Errors
           command: |
             errors=$(xmllint --xpath "count(//error)" target/checkstyle-result.xml)
-            echo "checkstyle-errors=$errors" >> $BASH_ENV
+            echo "export checkstyle-errors=$errors" >> $BASH_ENV
       - run:
           name: Update README.md with Badge
           command: |
-            echo "![CheckStyle Badge](https://img.shields.io/badge/CheckStyle-$checkstyle-errors-green)" > README.md
+            echo "![CheckStyle Badge](https://img.shields.io/badge/CheckStyle-${checkstyle-errors}-green)" > README.md
             git config user.name "LucasLeiner"
             git config user.email "lucasleiner05@gmail.com"
             git add README.md
             git commit -m "Update Checkstyle Badge"
-            git push https://<LucasLeiner>:${GH_TOKEN}@github.com/<LucasLeiner>/<ceri-m1-techniques-de-test>.git master
+            git push https://LucasLeiner:${GH_TOKEN}@github.com/LucasLeiner/ceri-m1-techniques-de-test.git master
       - codecov/upload
 
 workflows:
