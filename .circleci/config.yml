@@ -41,14 +41,7 @@ jobs:
       - run:
           name: Update README.md with Badge
           command: |
-            badge="![CheckStyle Badge](https://img.shields.io/badge/CheckStyle-${checkstyle_errors}-green)"
-            
-            if grep -q "CheckStyle Badge" README.md; then
-              sed -i "s|!\[CheckStyle Badge\].*|$badge|" README.md
-            else
-              sed -i "/!\[CircleCI\]/a $badge" README.md
-            fi
-
+            echo "![CheckStyle Badge](https://img.shields.io/badge/CheckStyle-${checkstyle_errors}-green)" > README.md
             git config user.name "LucasLeiner"
             git config user.email "lucasleiner05@gmail.com"
             git add README.md
