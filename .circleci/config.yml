@@ -4,6 +4,18 @@ orbs:
   codecov: codecov/codecov@4.0.1
 
 jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:23.0
+    steps:
+      - checkout
+      - run:
+          name: Setup Maven
+          command: mvn -version
+      - run:
+          name: Build With Maven
+          command: mvn clean package -DskipTests
+
   test:
     docker:
       - image: cimg/openjdk:23.0
@@ -43,7 +55,6 @@ jobs:
             git commit -m "Update Checkstyle Badge"
             git push https://LucasLeiner:${GH_TOKEN}@github.com/LucasLeiner/ceri-m1-techniques-de-test.git master
       - codecov/upload
-
 
 workflows:
   build_and_test_and_deploy:
